@@ -6,23 +6,23 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyShEx-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/PyShEx-{{ version }}.tar.gz
   sha256: 3c5c4d45fe27faaadae803cb008c41acf8ee784da7868b04fd84967e75be70d0
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
   entry_points:
     - shexeval = pyshex.shex_evaluator:evaluate_cli
 
 requirements:
   host:
-    - python >=3.6
+    - python {{ python_min }}
     - pbr
     - pip
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - cfgraph >=0.2.1
     - chardet
     - pyshexc ==0.9.1
@@ -40,6 +40,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/hsolbrig/PyShEx
