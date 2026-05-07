@@ -1,18 +1,18 @@
 {% set name = "pyshex" %}
-{% set version = "0.8.1" %}
+{% set version = "0.9.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/PyShEx-{{ version }}.tar.gz
-  sha256: 3c5c4d45fe27faaadae803cb008c41acf8ee784da7868b04fd84967e75be70d0
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 87288b5e5613f734f55f0085334558218ff618fb1061aabdcee19841092b3eca
 
 build:
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 1
+  number: 0
   entry_points:
     - shexeval = pyshex.shex_evaluator:evaluate_cli
 
