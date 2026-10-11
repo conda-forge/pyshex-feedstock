@@ -191,5 +191,4 @@ Feedstock Maintainers
 =====================
 
 * [@bollwyvl](https://github.com/bollwyvl/)
-* [@jfy133](https://github.com/jfy133/)
 
