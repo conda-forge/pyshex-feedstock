@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/prefix-dev/recipe-format/main/schema.json
+schema_version: 1
+
+context:
+  version: "0.9.0"
+  python_check_max: "3.14"
+
+package:
+  name: pyshex
+  version: ${{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/source/p/pyshex/pyshex-${{ version }}.tar.gz
+  sha256: 87288b5e5613f734f55f0085334558218ff618fb1061aabdcee19841092b3eca
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation --disable-pip-version-check --check-build-dependencies
+  python:
+    entry_points:
+      - shexeval = pyshex.shex_evaluator:evaluate_cli
+
+requirements:
+  host:
+    - hatchling
+    - pip
+    - python ${{ python_min }}.*
+    - uv-dynamic-versioning
+  run:
+    - cfgraph >=0.2.1
+    - chardet
+    - pyshexc >=0.10.3
+    - python >=${{ python_min }}
+    - rdflib-shim
+    - requests >=2.22.0
+    - shexjsg >=0.9.0
+    - sparqlslurper >=0.5.1
+    - sparqlwrapper >=1.8.5
+    - urllib3
+
+tests:
+  - package_contents:
+      strict: true
+      site_packages:
+        - pyshex/**
+        - pyshex-${{ version }}.dist-info/**
+  - python:
+      imports: pyshex
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - ${{ python_check_max }}.*
+  - requirements:
+      run:
+        - python ${{ python_min }}.*
+    script:
+      - shexeval --help
+
+about:
+  summary: Python ShEx interpreter
+  license: CC0-1.0
+  license_file: license.txt
+  homepage: https://pypi.org/project/pyshex
+  repository: https://github.com/linkml/pyshex
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
